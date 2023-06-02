@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -12,9 +17,10 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'name'     => 'required|string|max:255',
             'phone'    => 'required|numeric|unique:users',
-            'governorate' => 'required',
-            'address' => 'required',
-            'password' => 'required|min:8'
+            'parent_phone'    => 'required|numeric',
+            'password' => 'required|min:8',
+            'level' => 'required',
+            'study_type' => 'required',
 
         ]);
 
@@ -31,15 +37,12 @@ class UserController extends Controller
 
         $user->name = $request->name;
         $user->phone = $request->phone;
+        $user->parent_phone = $request->parent_phone;
         $user->password = bcrypt($request->password);
+        $user->level = $request->level;
+        $user->study_type = $request->study_type;
         $user->save();
 
-        $address = new Address();
-        $address->user_id = $user->id;
-        $address->governorate = $request->governorate;
-        $address->address = $request->address;
-        $address->selected = 1;
-        $address->save();
 
 
 
@@ -47,10 +50,10 @@ class UserController extends Controller
 
 
         return response()->json([
-            'message' => 'data fetched successfully',
+            'message' => 'user created successfully',
             'code' => 200,
+            'status' => true,
             'data' => $user,
-            'address' => $address,
         ]);
     }
 
@@ -58,7 +61,7 @@ class UserController extends Controller
     {
 
         $loginData = Validator::make($request->all(), [
-            'phone' => 'required',
+            'phone' => 'required|numeric',
             'password' => 'required',
         ]);
 
@@ -135,7 +138,7 @@ class UserController extends Controller
         return response()->json([
             'code' => 200,
             'status' => true,
-            'message' => 'logout Successfully',
+            'message' => 'Logged out Successfully',
         ]);
     }
 
@@ -240,7 +243,7 @@ class UserController extends Controller
                     [
                         "errors" => [
                             "phone" => [
-                                "No Account Assigned To This phone!"
+                                "Code is invalid!"
                             ]
                         ],
                         "status" => false,
@@ -248,9 +251,19 @@ class UserController extends Controller
                     ]
                 );
             }
+        } else {
+
+            return response()->json(
+                [
+                    "errors" => [
+                        "phone" => [
+                            "No account assigned to this phone!"
+                        ]
+                    ],
+                    "status" => false,
+                    'code' => 404,
+                ]
+            );
         }
     }
-
-
-
 }
