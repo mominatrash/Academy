@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\BannerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,3 +27,13 @@ Route::post('logout', [Usercontroller::class, 'logout']);
 Route::post('forgot_password', [Usercontroller::class, 'forgot_password']);
 Route::post('verify_pass_code', [Usercontroller::class, 'verify_pass_code']);
 Route::post('change_forgotten_password', [Usercontroller::class, 'change_forgotten_password']);
+
+
+// Banners
+
+Route::get('welcome', [BannerController::class, 'welcome']);
+Route::get('banner', [BannerController::class, 'banner']);
+Route::get('privacy', [BannerController::class, 'privacy']);
+Route::get('about_us', [BannerController::class, 'about_us']);
+
+
