@@ -4,6 +4,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BannerController;
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\LevelController;
+use App\Http\Controllers\SubjectController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,4 +39,18 @@ Route::get('banner', [BannerController::class, 'banner']);
 Route::get('privacy', [BannerController::class, 'privacy']);
 Route::get('about_us', [BannerController::class, 'about_us']);
 
+
+
+//subjects
+Route::get('show_subjects', [SubjectController::class, 'show_subjects']);
+Route::post('get_courses_from_subject', [SubjectController::class, 'get_courses_from_subject']);
+
+
+//levels
+Route::post('subject_levels', [LevelController::class, 'subject_levels']);
+Route::post('levels', [SubjectController::class, 'levels']);
+
+
+//courses
+Route::post('course_by_id', [CourseController::class, 'course_by_id']);
 
