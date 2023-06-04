@@ -73,6 +73,7 @@ Route::post('section_by_id_from_purchased_course', [SectionController::class, 's
 Route::post('add_attachment_lesson', [LessonController::class, 'add_attachment_lesson']);
 Route::post('show_download_attachment', [LessonController::class, 'show_download_attachment']);
 Route::post('show_attachments_for_lesson', [LessonController::class, 'show_attachments_for_lesson']);
+Route::post('lesson_by_id', [LessonController::class, 'lesson_by_id']);
 
 
 

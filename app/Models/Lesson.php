@@ -11,4 +11,12 @@ class Lesson extends Model
     protected $table = 'lessons';
     protected $guarded = [];
 
+
+    public function comments(){
+        return $this->hasMany('App\Models\Comment');
+    }
+
+    public function attachments(){
+        return $this->hasMany('App\Models\Lesson_attachment');
+    }
 }
