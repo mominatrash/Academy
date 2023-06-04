@@ -57,10 +57,9 @@ Route::post('subject_levels', [LevelController::class, 'subject_levels']);
 
 
 //courses
-Route::post('course_by_id', [CourseController::class, 'course_by_id']);
 Route::post('my_Courses', [CourseController::class, 'my_Courses']);
 Route::get('latest_courses', [CourseController::class, 'latest_courses']);
-Route::post('course_by_id_from_myCourses', [CourseController::class, 'course_by_id_from_myCourses']);
+Route::post('course_by_id', [CourseController::class, 'course_by_id']);
 
 
 

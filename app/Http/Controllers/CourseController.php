@@ -24,25 +24,6 @@ class CourseController extends Controller
     }
 
 
-    public function course_by_id(Request $request)
-    {
-
-        $course = Course::where('id', $request->course_id)->first();
-
-
-        // $courses=Course::where('course_id',$request->course)->pluck('id');
-
-        $sections = Section::where('course_id', $request->course_id)->pluck('id');
-        $lessons = Lesson::whereIn('section_id', $sections)->where('type', 1)->get();
-
-        return response()->json([
-            'message' => 'data fetched successfully',
-            'code' => 200,
-            'status' => true,
-            'course' => $course,
-            'lessons' => $lessons
-        ]);
-    }
 
     public function my_Courses()
     {
@@ -58,21 +39,46 @@ class CourseController extends Controller
         ]);
     }
 
-    public function course_by_id_from_myCourses(Request $request)
+    public function course_by_id(Request $request)
     {
+        $requested_course = Course::where('id', $request->course_id)->first();
         $course_id = Code::where('user_id', Auth::guard('api')->user()->id)->where('course_id', $request->course_id)->first();
 
-        if ($course_id) {
-            $requested_course = Course::where('id', $course_id->course_id)->first();
+        if ($requested_course->is_free == 0 && isset($course_id)) {
+
             $sections = Section::where('course_id', $request->course_id)->with('lessons')->get();
+            if ($sections->count() > 0) {
+                $requested_course->sections = $sections;
 
-            $requested_course->sections = $sections;
+                return response()->json([
+                    'message' => 'data fetched successfully',
+                    'code' => 200,
+                    'status' => true,
+                    'course' => $requested_course,
+                ]);
+            }
+        } elseif ($requested_course->is_free == 0 && !isset($course_id)) {
+            $sections = Section::where('course_id', $request->course_id)->pluck('id');
+            $lessons = Lesson::whereIn('section_id', $sections)->where('type', 1)->get();
+            if ($lessons->count() > 0) {
 
+                return response()->json([
+                    'message' => 'data fetched successfully',
+                    'code' => 200,
+                    'status' => true,
+                    'course' => $requested_course,
+                    'lessons' => $lessons,
+                ]);
+            }
+        } elseif ($requested_course->is_free == 1) {
+            $sections = Section::where('course_id', $request->course_id)->pluck('id');
+            $lessons = Lesson::whereIn('section_id', $sections)->get();
             return response()->json([
                 'message' => 'data fetched successfully',
                 'code' => 200,
                 'status' => true,
                 'course' => $requested_course,
+                'lessons' => $lessons,
             ]);
         } else {
             return response()->json([
