@@ -5,15 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Course extends Model
+class Comment_Reply_Like extends Model
 {
     use HasFactory;
-    protected $table = 'courses';
+    protected $table = 'comment_reply_likes';
     protected $guarded = [];
-
-    public function sections()
-    {
-        return $this->hasMany('App\Models\Section');
-    }
-
 }

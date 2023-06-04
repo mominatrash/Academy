@@ -4,8 +4,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BannerController;
+use App\Http\Controllers\CodeController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\LessonController;
 use App\Http\Controllers\LevelController;
+use App\Http\Controllers\SectionController;
 use App\Http\Controllers\SubjectController;
 
 /*
@@ -48,9 +52,43 @@ Route::post('get_courses_from_subject', [SubjectController::class, 'get_courses_
 
 //levels
 Route::post('subject_levels', [LevelController::class, 'subject_levels']);
-Route::post('levels', [SubjectController::class, 'levels']);
+
 
 
 //courses
 Route::post('course_by_id', [CourseController::class, 'course_by_id']);
+Route::post('my_Courses', [CourseController::class, 'my_Courses']);
+Route::get('latest_courses', [CourseController::class, 'latest_courses']);
+Route::post('course_by_id_from_myCourses', [CourseController::class, 'course_by_id_from_myCourses']);
+
+
+
+//sections
+Route::post('section_by_id_from_purchased_course', [SectionController::class, 'section_by_id_from_purchased_course']);
+
+
+
+
+//lessons
+Route::post('add_attachment_lesson', [LessonController::class, 'add_attachment_lesson']);
+Route::post('show_download_attachment', [LessonController::class, 'show_download_attachment']);
+Route::post('show_attachments_for_lesson', [LessonController::class, 'show_attachments_for_lesson']);
+
+
+
+
+//Codes
+Route::post('generate_codes_for_course', [CodeController::class, 'generate_codes_for_course']);
+Route::post('subscribe', [CodeController::class, 'subscribe']);
+
+
+
+//comments
+Route::post('add_comment', [CommentController::class, 'add_comment']);
+Route::post('show_comments', [CommentController::class, 'show_comments']);
+Route::post('add_reply', [CommentController::class, 'add_reply']);
+Route::post('show_replies', [CommentController::class, 'show_replies']);
+Route::post('comment_reply_like', [CommentController::class, 'comment_reply_like']);
+
+
 

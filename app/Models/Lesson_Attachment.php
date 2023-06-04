@@ -5,15 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Course extends Model
+class Lesson_Attachment extends Model
 {
     use HasFactory;
-    protected $table = 'courses';
+    protected $table = 'lesson_attachments';
     protected $guarded = [];
-
-    public function sections()
-    {
-        return $this->hasMany('App\Models\Section');
-    }
-
 }
+

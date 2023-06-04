@@ -10,4 +10,8 @@ class Section extends Model
     use HasFactory;
     protected $table = 'sections';
     protected $guarded = [];
+
+    public function lessons(){
+        return $this->hasMany('App\Models\Lesson');
+    }
 }
