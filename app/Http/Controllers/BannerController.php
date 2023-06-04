@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Article;
 use App\Models\Banner;
 use Illuminate\Http\Request;
 
@@ -86,5 +87,32 @@ class BannerController extends Controller
                 'status' => false,
             ]);
         }
+    }
+
+    public function show_articles()
+    {
+        $articles = Article::paginate(5);
+
+        return response()->json([
+            'message' => 'data fetched successfully',
+            'code' => 200,
+            'status' => true,
+            'orders' => $articles
+        ]);
+    }
+
+
+    public function article_by_id(Request $request)
+    {
+        $article = Article::where('id' , $request->article_id)->first();
+        $articles = Article::paginate(5);
+
+        return response()->json([
+            'message' => 'data fetched successfully',
+            'code' => 200,
+            'status' => true,
+            'article' => $article,
+            'other articles' => $articles,
+        ]);
     }
 }

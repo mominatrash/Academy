@@ -11,6 +11,7 @@ use App\Http\Controllers\LessonController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\VideoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -90,6 +91,21 @@ Route::post('show_comments', [CommentController::class, 'show_comments']);
 Route::post('add_reply', [CommentController::class, 'add_reply']);
 Route::post('show_replies', [CommentController::class, 'show_replies']);
 Route::post('comment_reply_like', [CommentController::class, 'comment_reply_like']);
+
+
+
+
+//video
+Route::post('add_video', [VideoController::class, 'add_video']);
+Route::get('videos', [VideoController::class, 'videos']);
+
+
+
+//articles
+Route::get('show_articles', [BannerController::class, 'show_articles']);
+Route::post('article_by_id', [BannerController::class, 'article_by_id']);
+
+
 
 
 

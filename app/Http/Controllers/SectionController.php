@@ -11,12 +11,13 @@ class SectionController extends Controller
 {
     public function section_by_id_from_purchased_course(Request $request)
     {
-        $course_id = Code::where('user_id', Auth::guard('api')->user()->id)->where('course_id', $request->course_id)->first();
-    
-        if ($course_id) {
-            $section = Section::where('id', $request->section_id)->where('course_id', $request->course_id)->with('lessons')->first();
-    
-            if ($section) {
+        $section = Section::where('id', $request->section_id)->with('lessons')->first();
+        if ($section) {
+            $course_id = Code::where('user_id', Auth::guard('api')->user()->id)->where('course_id', $section->course_id)->first();
+
+            if ($course_id) {
+                //  $section = Section::where('id', $request->section_id)->where('course_id', $request->course_id)->with('lessons')->first();
+
                 return response()->json([
                     'message' => 'data fetched successfully',
                     'code' => 200,
@@ -24,10 +25,11 @@ class SectionController extends Controller
                     'section' => $section,
                 ]);
             } else {
+
                 return response()->json([
                     'errors' => [
-                        'section' => [
-                            'هذا الفصل غير موجود أو غير تابع لهذه الدورة',
+                        'course' => [
+                            'يجب عليك شراء الدورة أولا.',
                         ],
                     ],
                     'status' => false,
@@ -37,8 +39,8 @@ class SectionController extends Controller
         } else {
             return response()->json([
                 'errors' => [
-                    'course' => [
-                        'يجب عليك شراء الدورة أولا.',
+                    'section' => [
+                        'هذا الفصل غير موجود أو غير تابع لهذه الدورة',
                     ],
                 ],
                 'status' => false,

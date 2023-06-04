@@ -170,6 +170,7 @@ class CommentController extends Controller
                     return response()->json([
                         'message' => 'تم اضافة اللايك للتعليق',
                         'code' => 200,
+                        
                         'status' => true,
                     ]);
                 }
