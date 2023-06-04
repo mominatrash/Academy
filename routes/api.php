@@ -43,6 +43,7 @@ Route::get('welcome', [BannerController::class, 'welcome']);
 Route::get('banner', [BannerController::class, 'banner']);
 Route::get('privacy', [BannerController::class, 'privacy']);
 Route::get('about_us', [BannerController::class, 'about_us']);
+Route::get('ad_details', [BannerController::class, 'ad_details']);
 
 
 

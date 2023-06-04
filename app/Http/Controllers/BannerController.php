@@ -71,7 +71,7 @@ class BannerController extends Controller
 
     public function about_us()
     {
-        $about_us = Banner::where('type', '=', 'aboutus')->get();
+        $about_us = Banner::where('type', '=', 'about us')->get();
         if ($about_us->count() > 0) {
 
             return response()->json([
@@ -79,6 +79,26 @@ class BannerController extends Controller
                 'code' => 200,
                 'status' => true,
                 'orders' => $about_us
+            ]);
+        } else {
+            return response()->json([
+                'message' => 'No orders found!',
+                'code' => 500,
+                'status' => false,
+            ]);
+        }
+    }
+
+    public function ad_details()
+    {
+        $ad = Banner::where('type', '=', 'ad')->get();
+        if ($ad->count() > 0) {
+
+            return response()->json([
+                'message' => 'data fetched successfully',
+                'code' => 200,
+                'status' => true,
+                'orders' => $ad
             ]);
         } else {
             return response()->json([
