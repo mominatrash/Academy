@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Code;
+use App\Models\User;
 use App\Models\Course;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -32,31 +33,47 @@ class CodeController extends Controller
 
     public function subscribe(Request $request)
     {
-        $code = Code::where('code', $request->code)->first();
-        if ($code) {
-            if ($code->status == 0) {
+        $user = User::where('id', Auth::guard('api')->user()->id)->first();
 
-                $course = Code::where('course_id', $request->course_id)->first();
+        if ($user->verify_status == "مقبول") {
+            $code = Code::where('code', $request->code)->first();
+            if ($code) {
+                if ($code->status == 0) {
 
-                if ($course) {
+                    $course = Code::where('course_id', $request->course_id)->first();
 
-                    $code->user_id = Auth::guard('api')->user()->id;
-                    $code->status = 1;
-                    $code->save();
+                    if ($course) {
 
-                    return response()->json([
-                        'code' => 200,
-                        'status' => true,
-                        'message' => 'تم الإشتراك بالدورة بنجاح'
-                    ]);
+                        $code->user_id = Auth::guard('api')->user()->id;
+                        $code->status = 1;
+                        $code->save();
 
+                        return response()->json([
+                            'code' => 200,
+                            'status' => true,
+                            'message' => 'تم الإشتراك بالدورة بنجاح'
+                        ]);
+                    } else {
+
+                        return response()->json(
+                            [
+                                "errors" => [
+                                    "phone" => [
+                                        "!هذا الكود غير صالح لهذه الدورة"
+                                    ]
+                                ],
+                                "status" => false,
+                                'code' => 404,
+                            ]
+                        );
+                    }
                 } else {
 
                     return response()->json(
                         [
                             "errors" => [
                                 "phone" => [
-                                    "!هذا الكود غير صالح لهذه الدورة"
+                                    "!الكود مستخدم"
                                 ]
                             ],
                             "status" => false,
@@ -64,14 +81,13 @@ class CodeController extends Controller
                         ]
                     );
                 }
-
             } else {
 
                 return response()->json(
                     [
                         "errors" => [
                             "phone" => [
-                                "!الكود مستخدم"
+                                "!الكود غير صالح"
                             ]
                         ],
                         "status" => false,
@@ -79,14 +95,13 @@ class CodeController extends Controller
                     ]
                 );
             }
-            
-        }else {
-            
+        }else{
+
             return response()->json(
                 [
                     "errors" => [
                         "phone" => [
-                            "!الكود غير صالح"
+                            "يرجى تفعيل الحساب أولا"
                         ]
                     ],
                     "status" => false,

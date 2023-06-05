@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Verify;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -265,5 +266,71 @@ class UserController extends Controller
                 ]
             );
         }
+    }
+
+
+    public function verify_acc(Request $request)
+    {
+        $verify = new Verify();
+
+
+        $verify->user_id = Auth::guard('api')->user()->id;
+        $verify->name = $request->name;
+        $verify->governorate = $request->governorate;
+        $verify->address = $request->address;
+
+        $pfp = $request->file('pfp');
+        $pfp_name = $pfp->getClientOriginalName();
+        $verify->pfp = asset('Attachments/' . 'verify attachments/' . Auth::guard('api')->user()->id . '/' . $pfp_name);
+        $pfp->move(public_path('Attachments/' . 'verify attachments/' . Auth::guard('api')->user()->id), $pfp_name);
+
+
+        $front_ID = $request->file('front_ID');
+        $front_ID_name = $front_ID->getClientOriginalName();
+        $verify->front_ID = asset('Attachments/' . 'verify attachments/' . Auth::guard('api')->user()->id  . '/' . $front_ID_name);
+        $front_ID->move(public_path('Attachments/' . 'verify attachments/' . Auth::guard('api')->user()->id ), $front_ID_name);
+
+
+        $back_ID = $request->file('back_ID');
+        $back_ID_name = $back_ID->getClientOriginalName();
+        $verify->back_ID = asset('Attachments/' . 'verify attachments/' . Auth::guard('api')->user()->id  . '/' . $back_ID_name);
+        $back_ID->move(public_path('Attachments/' . 'verify attachments/' . Auth::guard('api')->user()->id ), $back_ID_name);
+
+
+        $verify->save();
+
+
+        return response()->json([
+            'message' => 'تم ارفاق الملف للدرس بنجاح',
+            'code' => 200,
+            'status' => true,
+            'attachment' => $verify,
+        ]);
+    }
+
+
+    public function verify_accept(Request $request)
+    {
+        $accept = Verify::where('id' , $request->verify_id)->first();
+
+        $accept->status = "مقبول";
+        $accept->save();
+
+        $user = User::where('id' , $accept->user_id)->first();
+        $user->verify_status = "مقبول";
+        $user->save();
+    }
+
+
+    public function verify_decline(Request $request)
+    {
+        $accept = Verify::where('id' , $request->verify_id)->first();
+
+        $accept->status = "مرفوض";
+        $accept->save();
+
+        $user = User::where('id' , $accept->user_id)->first();
+        $user->verify_status = "مرفوض";
+        $user->save();
     }
 }

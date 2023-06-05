@@ -35,6 +35,9 @@ Route::post('logout', [Usercontroller::class, 'logout']);
 Route::post('forgot_password', [Usercontroller::class, 'forgot_password']);
 Route::post('verify_pass_code', [Usercontroller::class, 'verify_pass_code']);
 Route::post('change_forgotten_password', [Usercontroller::class, 'change_forgotten_password']);
+Route::post('verify_acc', [Usercontroller::class, 'verify_acc']);
+Route::post('verify_accept', [Usercontroller::class, 'verify_accept']);
+Route::post('verify_decline', [Usercontroller::class, 'verify_decline']);
 
 
 // Banners
