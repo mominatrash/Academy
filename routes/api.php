@@ -9,6 +9,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\LevelController;
+use App\Http\Controllers\QuizController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\VideoController;
@@ -107,6 +108,15 @@ Route::get('videos', [VideoController::class, 'videos']);
 //articles
 Route::get('show_articles', [BannerController::class, 'show_articles']);
 Route::post('article_by_id', [BannerController::class, 'article_by_id']);
+
+
+
+
+//quizzes
+Route::post('quiz_by_id', [QuizController::class, 'quiz_by_id']);
+Route::post('start_quiz', [QuizController::class, 'start_quiz']);
+Route::post('end_quiz', [QuizController::class, 'end_quiz']);
+
 
 
 

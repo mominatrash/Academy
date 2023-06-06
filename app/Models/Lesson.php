@@ -19,4 +19,8 @@ class Lesson extends Model
     public function attachments(){
         return $this->hasMany('App\Models\Lesson_attachment');
     }
+
+    public function quizzes(){
+        return $this->hasMany('App\Models\Quiz');
+    }
 }

@@ -11,7 +11,7 @@ class SectionController extends Controller
 {
     public function section_by_id_from_purchased_course(Request $request)
     {
-        $section = Section::where('id', $request->section_id)->with('lessons')->first();
+        $section = Section::where('id', $request->section_id)->with('lessons.quizzes')->first();
         if ($section) {
             $course_id = Code::where('user_id', Auth::guard('api')->user()->id)->where('course_id', $section->course_id)->first();
 
