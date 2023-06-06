@@ -4,11 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\Video;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class VideoController extends Controller
 {
     public function add_video(Request $request)
     {
+
+        $validator = Validator::make($request->all(), [
+            'link' => 'required|url|regex:/^(https?\:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/',
+        ]);
+
+
+
         $video = new Video();
         $video->link = $request->link;
 

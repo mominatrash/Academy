@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class totalPoints extends Model
 {
     use HasFactory;
-    protected $table = 'replies';
+    protected $table = 'user_points';
     protected $guarded = [];
 }
