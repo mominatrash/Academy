@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Code;
+use App\Models\Quiz;
 use App\Models\Section;
+use App\Models\totalPoints;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,9 +13,11 @@ class SectionController extends Controller
 {
     public function section_by_id_from_purchased_course(Request $request)
     {
-        $section = Section::where('id', $request->section_id)->with('lessons.quizzes')->first();
+        $section = Section::where('id', $request->section_id)->with('lessons.quizzes.myquizzes')->first();
+        $top_students = totalPoints::where('course_id' , $section->course_id)->orderBy('total_points' , 'desc')->get();
         if ($section) {
             $course_id = Code::where('user_id', Auth::guard('api')->user()->id)->where('course_id', $section->course_id)->first();
+            
 
             if ($course_id) {
                 //  $section = Section::where('id', $request->section_id)->where('course_id', $request->course_id)->with('lessons')->first();
@@ -23,6 +27,7 @@ class SectionController extends Controller
                     'code' => 200,
                     'status' => true,
                     'section' => $section,
+                    'total_points' => $top_students
                 ]);
             } else {
 

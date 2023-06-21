@@ -11,6 +11,7 @@ use App\Http\Controllers\LessonController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\SectionController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\VideoController;
 
@@ -116,6 +117,17 @@ Route::post('article_by_id', [BannerController::class, 'article_by_id']);
 Route::post('quiz_by_id', [QuizController::class, 'quiz_by_id']);
 Route::post('start_quiz', [QuizController::class, 'start_quiz']);
 Route::post('end_quiz', [QuizController::class, 'end_quiz']);
+
+
+
+//student
+Route::get('my_group', [StudentController::class, 'my_group']);
+Route::get('my_exams', [StudentController::class, 'my_exams']);
+Route::get('my_lectures', [StudentController::class, 'my_lectures']);
+Route::get('installments', [StudentController::class, 'installments']);
+Route::get('student_statistics', [StudentController::class, 'student_statistics']);
+
+
 
 
 

@@ -215,7 +215,7 @@ class QuizController extends Controller
                     'message' => 'else',
                     'code' => 200,
                     'status' => true,
-                    'quiz' => $myQuiz,
+                    'quiz' => $myQuiz,3
                 ]);
             }
         }
