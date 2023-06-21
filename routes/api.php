@@ -9,6 +9,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\LevelController;
+use App\Http\Controllers\ParentController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\StudentController;
@@ -126,6 +127,13 @@ Route::get('my_exams', [StudentController::class, 'my_exams']);
 Route::get('my_lectures', [StudentController::class, 'my_lectures']);
 Route::get('installments', [StudentController::class, 'installments']);
 Route::get('student_statistics', [StudentController::class, 'student_statistics']);
+
+
+
+
+
+//parent
+Route::post('parent_login', [ParentController::class, 'parent_login']);
 
 
 

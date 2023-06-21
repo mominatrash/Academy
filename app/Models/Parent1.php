@@ -4,8 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Passport\HasApiTokens;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Parent1 extends Model
+class Parent1 extends Authenticatable
 {
-    use HasFactory;
+    use HasFactory , HasApiTokens;
+    protected $table = 'parents';
+    protected $guarded = [];
 }
