@@ -44,7 +44,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/style-rtl.css') }}">
     <!-- END: Custom CSS-->
 
-
+    @yield('css')
 
 </head>
 <!-- END: Head-->

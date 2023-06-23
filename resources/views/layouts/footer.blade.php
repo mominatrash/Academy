@@ -26,7 +26,7 @@
 <script src="{{ asset('/app-assets/js/scripts/pages/dashboard-ecommerce.js')}}"></script>
 <!-- END: Page JS-->
 
-
+@yield('scripts')
 
 <script>
     $(window).on('load', function() {
@@ -37,5 +37,6 @@
             });
         }
     })
+
 
 </script>

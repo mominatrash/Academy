@@ -3,7 +3,7 @@
 
 @include('layouts.head')
 
-@yield('css')
+
 
 <!-- BEGIN: Body-->
 
@@ -43,7 +43,7 @@
 
     @include('layouts.footer')
 
-    @yield('scripts')
+
 
 </body>
 <!-- END: Body-->
