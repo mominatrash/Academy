@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
+use App\Http\Controllers\Controller;
 
 use App\Models\Level;
 use App\Models\Course;
@@ -14,15 +15,19 @@ class SubjectController extends Controller
     public function show_subjects()
     {
         $subjects = Subject::with('levels')->get();
+    
 
-        return response()->json([
-            'message' => 'data fetched successfully',
-            'code' => 200,
-            'status' => true,
-            'subjects' => $subjects
-        ]);
+            return response()->json([
+                'message' => 'data fetched successfully',
+                'code' => 200,
+                'status' => true,
+                'subjects' => $subjects
+            ]);
+      
+            return view('welcome', compact('subjects'));
     }
-
+    
+    
     public function get_courses_from_subject(Request $request)
     {
 

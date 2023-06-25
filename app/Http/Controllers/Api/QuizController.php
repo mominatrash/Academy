@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
+use App\Http\Controllers\Controller;
 
 use App\Models\Answer;
 use App\Models\Course;
@@ -23,6 +24,7 @@ class QuizController extends Controller
         $myQuiz = myQuiz::where('quiz_id', $request->quiz_id)->where('user_id', Auth::guard('api')->user()->id)->first();
 
         if ($myQuiz && $quiz) {
+
             $quiz = Quiz::where('id', $request->quiz_id)->with('myquizzes')->first();
 
             return response()->json([
@@ -31,12 +33,19 @@ class QuizController extends Controller
                 'status' => true,
                 'quiz' => $quiz,
             ]);
+            
         } else {
+            $quiz = Quiz::where('id', $request->quiz_id)->first();
+
+            $quiz['remaining_attrempts'] = $quiz->attempts;
+            $quiz['points'] = 0;
+
             return response()->json([
                 'message' => 'ابدأ الاختبار',
                 'code' => 200,
                 'status' => true,
                 'quiz' => $quiz,
+
             ]);
         }
     }
@@ -166,13 +175,13 @@ class QuizController extends Controller
 
 
 
-            $points_for_question = $quiz->points / $questions->count();
+            $points_for_question = $quiz->points / $quiz->questions_number;
 
 
 
             if ($myQuiz->remaining_attempts == $quiz->attempts) {
-                $final_point = $answers_count * $points_for_question;
 
+                $final_point = $answers_count * $points_for_question;
                 $myQuiz->user_points = $final_point;
                 $myQuiz->save();
 
@@ -215,7 +224,7 @@ class QuizController extends Controller
                     'message' => 'else',
                     'code' => 200,
                     'status' => true,
-                    'quiz' => $myQuiz,3
+                    'quiz' => $myQuiz,
                 ]);
             }
         }

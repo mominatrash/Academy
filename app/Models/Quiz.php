@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Quiz extends Model
 {
@@ -19,7 +20,7 @@ class Quiz extends Model
 
     public function myquizzes()
     {
-        return $this->hasOne('App\Models\myQuiz');
+        return $this->hasOne('App\Models\myQuiz')->where('user_id', Auth::guard('api')->user()->id);
     }
 
 }

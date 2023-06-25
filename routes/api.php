@@ -2,19 +2,19 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\BannerController;
-use App\Http\Controllers\CodeController;
-use App\Http\Controllers\CommentController;
-use App\Http\Controllers\CourseController;
-use App\Http\Controllers\LessonController;
-use App\Http\Controllers\LevelController;
-use App\Http\Controllers\ParentController;
-use App\Http\Controllers\QuizController;
-use App\Http\Controllers\SectionController;
-use App\Http\Controllers\StudentController;
-use App\Http\Controllers\SubjectController;
-use App\Http\Controllers\VideoController;
+use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\BannerController;
+use App\Http\Controllers\Api\CodeController;
+use App\Http\Controllers\Api\CommentController;
+use App\Http\Controllers\Api\CourseController;
+use App\Http\Controllers\Api\LessonController;
+use App\Http\Controllers\Api\LevelController;
+use App\Http\Controllers\Api\ParentController;
+use App\Http\Controllers\Api\QuizController;
+use App\Http\Controllers\Api\SectionController;
+use App\Http\Controllers\Api\StudentController;
+use App\Http\Controllers\Api\SubjectController;
+use App\Http\Controllers\Api\VideoController;
 
 /*
 |--------------------------------------------------------------------------
