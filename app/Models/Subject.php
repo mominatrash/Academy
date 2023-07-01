@@ -12,8 +12,9 @@ class Subject extends Model
     protected $guarded = [];
 
 
-    public function levels(){
-        return $this->hasMany('App\Models\Level');
+    public function levels()
+    {
+        return $this->hasMany(Level::class);
     }
 
 }

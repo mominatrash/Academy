@@ -10,5 +10,10 @@ class Level extends Model
     use HasFactory;
     protected $table = 'levels';
     protected $guarded = [];
-}
 
+
+    public function subject()
+    {
+        return $this->belongsTo(Subject::class, 'subject_id');
+    }
+}

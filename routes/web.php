@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\LevelController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SubjectController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,4 +20,13 @@ Route::get('/', function () {
 });
 
 
-Route::get('show_subjects', [SubjectController::class, 'show_subjects']);
+Route::get('show_subjects', [SubjectController::class, 'show_subjects'])->name('show_subjects');
+Route::get('get_subjects_data', [SubjectController::class, 'get_subjects_data'])->name('get_subjects_data');
+Route::post('store_subject',  [SubjectController::class , 'store_subject'])->name('store_subject');
+Route::post('delete_subject',  [SubjectController::class , 'delete_subject'])->name('delete_subject');
+
+
+Route::get('/subject_levels/{subjectId}',  [LevelController::class , 'subject_levels'])->name('subject_levels');
+Route::get('subject_levels_data/{subject}', [LevelController::class , 'subject_levels_data'])->name('subject_levels_data');
+
+

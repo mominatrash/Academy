@@ -15,7 +15,7 @@
 
 @section('content')
 
-<h1>Body test</h1>
+
 
 @endsection
 
