@@ -30,3 +30,7 @@ Route::get('/subject_levels/{subjectId}',  [LevelController::class , 'subject_le
 Route::get('subject_levels_data/{subject}', [LevelController::class , 'subject_levels_data'])->name('subject_levels_data');
 
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
