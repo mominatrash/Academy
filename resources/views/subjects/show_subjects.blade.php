@@ -89,6 +89,44 @@
         </div>
     </div>
 
+    {{-- edit subject --}}
+<div class="form-modal-ex">
+    <div class="modal fade text-left" id="edit_subject" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel33">تعديل المادة</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="edit_subject_form">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input type="hidden" name="id" id="id2">
+                                <label>إسم المادة</label>
+                                <div class="form-group">
+                                    <input type="text" placeholder="name" name="subject_name" id="name_subject2" class="form-control" />
+                                    <span id="name_subject2_error" class="text-danger"></span>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" style="display: none" id="editing2" class="btn btn-primary btn-block">editing...</button>
+                        <button type="button" id="editing" onclick="do_update()" class="btn btn-primary btn-block">edit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 
     {{-- delete subject --}}
     <div class="modal fade modal-danger text-left" id="delete_subject" tabindex="-1" role="dialog"
@@ -141,6 +179,26 @@
         }
     </script>
 
+    
+<script>
+    function msg_edit() {
+
+        Swal.fire({
+            position: 'top-start',
+            icon: 'success',
+            title: 'تمت التعديل بنجاح',
+            showConfirmButton: false,
+            timer: 1500,
+            customClass: {
+                confirmButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+
+        });
+
+    }
+</script>
+
 
 
 
@@ -150,7 +208,7 @@
 
             Swal.fire({
                 position: 'top-start',
-                icon: 'info',
+                icon: 'success',
                 title: 'تم الحذف بنجاح',
                 showConfirmButton: false,
                 timer: 1500,
@@ -166,23 +224,23 @@
 
 
 
-<script type="text/javascript">
-    
-    $(function () {
-    var table = $('#yajra-datatable').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: "{{ route('get_subjects_data') }}",
-        columns: [
-            {data: 'DT_RowIndex',           name: 'DT_RowIndex', orderable: false, searchable: false},
-            {data: 'name'                  ,name: 'name'},
-            {data: 'levels_count'          ,name: 'levels_count'},
-            {data: 'action'     ,           name: 'action'},
-        ],
-        "lengthMenu": [[5,25,50,-1],[5,25,50,'All']],     // page length options
-    });
-    });
-</script>
+    <script type="text/javascript">
+        
+        $(function () {
+        var table = $('#yajra-datatable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('get_subjects_data') }}",
+            columns: [
+                {data: 'DT_RowIndex',           name: 'DT_RowIndex', orderable: false, searchable: false},
+                {data: 'name'                  ,name: 'name'},
+                {data: 'levels_count'},
+                {data: 'action'},
+            ],
+            "lengthMenu": [[5,25,50,-1],[5,25,50,'All']],     // page length options
+        });
+        });
+    </script>
 
 
 
@@ -223,6 +281,65 @@
             });
         });
     </script>
+
+    {{-- show edit subject --}}
+    <script>
+    $('#edit_subject').on('show.bs.modal', function(event) {
+
+        var button = $(event.relatedTarget)
+        var id =                  button.data('id')
+        var name =                button.data('name')
+
+        var modal = $(this)
+        modal.find('.modal-body #id2').val(id);
+        modal.find('.modal-body #name_subject2').val(name);
+    })
+    </script>  
+
+
+    {{-- update subject --}}
+<script>
+    function do_update(){
+
+        // $('#title2_error').text('')
+        // $('#body2_error').text('')
+        $('#name_subject2_error').text('')
+
+        $("#editing").css("display", "none");
+        $("#editing2").css("display", "block");
+        var formData = new FormData($('#edit_subject_form')[0]);
+            $.ajax({
+                type: 'post',
+                enctype: 'multipart/form-data',
+                url: "{{route('update_subject')}}",
+                data: formData,
+                processData: false,
+                contentType: false,
+                cache: false,
+                success: function (data) {
+                    $("#editing").css("display", "block");
+                    $("#editing2").css("display", "none");
+
+                    $('.close').click();
+
+                    $('#position-top-start_edit').click();
+                    $('.yajra-datatable').DataTable().ajax.reload(null, false);
+
+                }, error: function (reject) {
+                        $("#editing").css("display", "block");
+                        $("#editing2").css("display", "none");
+                        var response = $.parseJSON(reject.responseText);
+                        $.each(response.errors, function (key, val) {
+                            $("#" + key + "2_error").text(val[0]);
+                        });
+                }
+            });
+    }
+
+    </script>
+
+
+
 
     {{-- fill delete modal user --}}
     <script>

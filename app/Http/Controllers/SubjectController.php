@@ -18,8 +18,10 @@ class SubjectController extends Controller
     {
 
         if ($request->ajax()) {
-            $subjects = Subject::with('levels')->orderBy('id')->get();
-            return DataTables::of($subjects)
+
+            $data = Subject::with('levels')->orderBy('id')->get();
+
+            return DataTables::of($data)
 
             ->addIndexColumn()
             
@@ -27,30 +29,32 @@ class SubjectController extends Controller
                 return $user->id % 2 == 0 ? 'alert-warning' : '';
             })
 
-            // ->setRowAttr([
-            //     'align' => 'center'
-               
-            // ])
 
 
-            ->addColumn('action', function ($subjects) {
+            // ->addColumn('name', function ($data) {
 
-                return view('subjects.btns.actions', compact('subjects'));
+
+            //    return '<button class="btn btn-primary">'.$data->name.'</button>';
+
+            // })
+            ->addColumn('action', function ($data) {
+
+
+                return view('subjects.btns.actions', compact('data'));
 
             })
 
-            ->addColumn('levels_count', function ($subjects) {
-                return $subjects->levels->count();
+            ->addColumn('levels_count', function ($data) {
+                
+                return '<a href="'.route('show_levels', $data->id).'"><button class="btn btn-sm btn-primary">'.$data->levels->count().'</button></a>';
             })
+            
 
 
 
-            ->rawColumns(['name','levels_count', 'action' ])
+            ->rawColumns(['levels_count' ,'name'])
 
              ->make(true);
-
-                
-
                 
         }
     }
@@ -71,9 +75,20 @@ class SubjectController extends Controller
         $subject -> save();
 
         
-        return response()->json([]);
+        return response()->json([
+
+        ]);
 
 
+    }
+
+
+    public function update_subject(Request $request)
+    {
+        $subject= Subject::where('id',$request->id)->first();
+        $subject->name=$request->subject_name;
+        $subject->save();
+        return response()->json();
     }
 
 

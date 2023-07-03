@@ -26,7 +26,7 @@
                                 </g>
                             </g>
                         </svg></span>
-                    <h2 class="brand-text"> لوحة تحكم الأكاديمية</h2>
+                    <h3 class="brand-text" style="font-size:18px"> لوحة تحكم الأكاديمية</h3>
                 </a></li>
             {{-- <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"><i class="d-block d-xl-none text-primary toggle-icon font-medium-4" data-feather="x"></i><i class="d-none d-xl-block collapse-toggle-icon font-medium-4  text-primary" data-feather="disc" data-ticon="disc"></i></a></li>
         </ul> --}}
@@ -54,15 +54,30 @@
             </li>
             <li class=" nav-item"><a class="d-flex align-items-center" href="app-kanban.html"><i data-feather="grid"></i><span class="menu-title text-truncate" data-i18n="Kanban">Kanban</span></a>
             </li> --}}
-            <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="book"></i><span class="menu-title text-truncate" data-i18n="Invoice">المواد</span></a>
+            <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i class="fa fa-book"></i><span class="menu-title text-truncate" data-i18n="Invoice">المواد</span></a>
                 <ul class="menu-content">
                     <li><a class="d-flex align-items-center" href="/show_subjects"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">قائمة المواد</span></a>
                     </li>
-                    <li><a class="d-flex align-items-center" href="app-invoice-preview.html"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Preview">Preview</span></a>
+                </ul>
+            </li>
+
+            <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i class="fa fa-level-up"></i><span class="menu-title text-truncate" data-i18n="Invoice">المراحل</span></a>
+                <ul class="menu-content">
+                    <li><a class="d-flex align-items-center" href="/show_levels"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">قائمة المراحل</span></a>
                     </li>
-                    <li><a class="d-flex align-items-center" href="app-invoice-edit.html"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Edit">Edit</span></a>
+                </ul>
+            </li>
+
+            <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i class="fas fa-person-chalkboard fa-xl"></i><span class="menu-title text-truncate" data-i18n="Invoice">الدورات</span></a>
+                <ul class="menu-content">
+                    <li><a class="d-flex align-items-center" href="/show_courses"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">قائمة الدورات</span></a>
                     </li>
-                    <li><a class="d-flex align-items-center" href="app-invoice-add.html"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Add">Add</span></a>
+                </ul>
+            </li>
+
+            <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i class="fas fa-sitemap"></i><span class="menu-title text-truncate" data-i18n="Invoice">الأقسام</span></a>
+                <ul class="menu-content">
+                    <li><a class="d-flex align-items-center" href="/show_sections"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">قائمة الأقسام</span></a>
                     </li>
                 </ul>
             </li>
@@ -80,7 +95,7 @@
                     </li>
                 </ul>
             </li> --}}
-            <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="user"></i><span class="menu-title text-truncate" data-i18n="User">المستخدمين</span></a>
+            <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i class="fa fa-users"></i><span class="menu-title text-truncate" data-i18n="User">المستخدمين</span></a>
                 <ul class="menu-content">
                     <li><a class="d-flex align-items-center" href="app-user-list.html"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">List</span></a>
                     </li>
@@ -90,7 +105,7 @@
                     </li>
                 </ul>
             </li>
-            <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="file-text"></i><span class="menu-title text-truncate" data-i18n="Pages">التقارير</span></a>
+            <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i class="fa fa-address-card" aria-hidden="true">></i><span class="menu-title text-truncate" data-i18n="Pages">التقارير</span></a>
                 <ul class="menu-content">
                     <li><a class="d-flex align-items-center" href="#"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Authentication">Authentication</span></a>
                         <ul class="menu-content">
