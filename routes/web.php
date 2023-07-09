@@ -4,8 +4,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\LessonController;
+use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\QuizController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\SubjectController;
+use App\Models\Lesson;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,11 +22,13 @@ use App\Http\Controllers\SubjectController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 Route::group(['middleware' => ['auth']], function () {
+
+    Route::get('/', function () {
+        return view('welcome');
+    });
 
 
 //subjects
@@ -67,6 +73,47 @@ Route::post('store_section', [SectionController::class , 'store_section'])->name
 Route::post('update_section',  [SectionController::class , 'update_section'])->name('update_section');
 Route::post('delete_section',  [SectionController::class , 'delete_section'])->name('delete_section');
 
+
+
+
+//lessons
+
+Route::get('/show_lessons/{id?}',  [LessonController::class , 'show_lessons'])->name('show_lessons');
+Route::get('get_lessons_data/{id?}', [LessonController::class , 'get_lessons_data'])->name('get_lessons_data');
+Route::get('subject_lessons_data/{id}', [LessonController::class , 'subject_lessons_data'])->name('subject_lessons_data');
+Route::post('store_lesson', [LessonController::class , 'store_lesson'])->name('store_lesson');
+Route::post('update_lesson',  [LessonController::class , 'update_lesson'])->name('update_lesson');
+Route::post('delete_lesson',  [LessonController::class , 'delete_lesson'])->name('delete_lesson');
+
+
+
+//attachments
+Route::get('show_lesson_attachments/{id}',  [LessonController::class , 'show_lesson_attachments'])->name('show_lesson_attachments');
+Route::get('get_lesson_attachments_data/{id}',  [LessonController::class , 'get_lesson_attachments_data'])->name('get_lesson_attachments_data');
+Route::post('store_lesson_attachment', [LessonController::class , 'store_lesson_attachment'])->name('store_lesson_attachment');
+Route::post('update_lesson_attachment',  [LessonController::class , 'update_lesson_attachment'])->name('update_lesson_attachment');
+Route::post('delete_lesson_attachment',  [LessonController::class , 'delete_lesson_attachment'])->name('delete_lesson_attachment');
+
+
+
+
+//quizzes
+Route::get('/show_quizzes/{id?}',  [QuizController::class , 'show_quizzes'])->name('show_quizzes');
+Route::get('get_quizzes_data/{id?}', [QuizController::class , 'get_quizzes_data'])->name('get_quizzes_data');
+Route::get('subject_quizzes_data/{id}', [QuizController::class , 'subject_quizzes_data'])->name('subject_quizzes_data');
+Route::post('store_quiz', [QuizController::class , 'store_quiz'])->name('store_quiz');
+Route::post('update_quiz',  [QuizController::class , 'update_quiz'])->name('update_quiz');
+Route::post('delete_quiz',  [QuizController::class , 'delete_quiz'])->name('delete_quiz');
+
+
+
+//questions
+Route::get('/show_questions/{id?}',  [QuestionController::class , 'show_questions'])->name('show_questions');
+Route::get('get_questions_data/{id?}', [QuestionController::class , 'get_questions_data'])->name('get_questions_data');
+Route::get('subject_questions_data/{id}', [QuestionController::class , 'subject_questions_data'])->name('subject_questions_data');
+Route::post('store_question/{id}', [QuestionController::class , 'store_question'])->name('store_question');
+Route::post('update_question',  [QuestionController::class , 'update_question'])->name('update_question');
+Route::post('delete_question',  [QuestionController::class , 'delete_question'])->name('delete_question');
 
 
 

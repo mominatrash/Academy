@@ -14,4 +14,9 @@ class Section extends Model
     public function lessons(){
         return $this->hasMany('App\Models\Lesson');
     }
+
+    public function course()
+    {
+        return $this->belongsTo('App\Models\Course');
+    }
 }

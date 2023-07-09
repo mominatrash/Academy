@@ -46,8 +46,8 @@ class SectionController extends Controller
 
             ->addColumn('lessons_count', function ($data) {
                 
-                return '<a href=""><button class="btn btn-secondary">'.$data->lessons->count().'</button></a>';
-                // '.route('show_lessons', ['id' => $data->id]).'
+                return '<a href="'.route('show_lessons', ['id' => $data->id]).'"><button class="btn btn-secondary">'.$data->lessons->count().'</button></a>';
+                
             })
 
             ->rawColumns(['name' , 'lessons_count'])

@@ -81,7 +81,7 @@ class CourseController extends Controller
 
             ->addColumn('sections_count', function ($data) {
                 
-                return '<a href="'.route('show_courses', ['id' => $data->id]).'"><button class="btn btn-secondary">'.$data->sections->count().'</button></a>';
+                return '<a href="'.route('show_sections', ['id' => $data->id]).'"><button class="btn btn-secondary">'.$data->sections->count().'</button></a>';
             })
 
 
@@ -106,6 +106,7 @@ class CourseController extends Controller
 
         $request->validate([
             'name'   => 'required',
+            'image' => 'required|max:10240',
 
         ]);
 
@@ -131,6 +132,7 @@ class CourseController extends Controller
 
         $request->validate([
             'name'   => 'required',
+            'image' => 'required|max:10240',
 
         ]);
 

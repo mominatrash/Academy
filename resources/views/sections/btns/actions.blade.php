@@ -1,5 +1,5 @@
 <a class="btn btn-sm btn-primary" data-toggle="modal" href="#edit_section" data-id="{{ $data->id }}"
-    data-name="{{ $data->name }}" data-subject_id = {{ $data->subject_id }}> <i class="fa fa-edit"> </i> تعديل  </a>
+    data-name="{{ $data->name }}" data-course_id = {{ $data->course_id }}> <i class="fa fa-edit"> </i> تعديل  </a>
 
 
 

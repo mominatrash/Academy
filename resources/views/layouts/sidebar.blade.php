@@ -61,14 +61,14 @@
                 </ul>
             </li>
 
-            <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i class="fa fa-level-up"></i><span class="menu-title text-truncate" data-i18n="Invoice">المراحل</span></a>
+            <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i class="fas fa-layer-group"></i><span class="menu-title text-truncate" data-i18n="Invoice">المراحل</span></a>
                 <ul class="menu-content">
                     <li><a class="d-flex align-items-center" href="/show_levels"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">قائمة المراحل</span></a>
                     </li>
                 </ul>
             </li>
 
-            <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i class="fas fa-person-chalkboard fa-xl"></i><span class="menu-title text-truncate" data-i18n="Invoice">الدورات</span></a>
+            <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i class="fas fa-chalkboard-user"></i><span class="menu-title text-truncate" data-i18n="Invoice">الدورات</span></a>
                 <ul class="menu-content">
                     <li><a class="d-flex align-items-center" href="/show_courses"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">قائمة الدورات</span></a>
                     </li>
@@ -78,6 +78,20 @@
             <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i class="fas fa-sitemap"></i><span class="menu-title text-truncate" data-i18n="Invoice">الأقسام</span></a>
                 <ul class="menu-content">
                     <li><a class="d-flex align-items-center" href="/show_sections"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">قائمة الأقسام</span></a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class=" nav-item"><a class="d-flex align-items-center" href=""><i class="fas fa-solid fa-person-chalkboard"></i><span class="menu-title text-truncate" data-i18n="Invoice">الدروس</span></a>
+                <ul class="menu-content">
+                    <li><a class="d-flex align-items-center" href="/show_lessons"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">قائمة الدروس</span></a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class=" nav-item"><a class="d-flex align-items-center" href=""><i class="fa-regular fa-file-lines"></i><span class="menu-title text-truncate" data-i18n="Invoice">الإختبارات</span></a>
+                <ul class="menu-content">
+                    <li><a class="d-flex align-items-center" href="/show_quizzes"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">قائمة الإختبارات</span></a>
                     </li>
                 </ul>
             </li>

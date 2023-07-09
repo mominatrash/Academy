@@ -23,4 +23,9 @@ class Lesson extends Model
     public function quizzes(){
         return $this->hasMany('App\Models\Quiz');
     }
+
+    public function section()
+    {
+        return $this->belongsTo('App\Models\Section');
+    }
 }

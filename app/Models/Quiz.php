@@ -23,4 +23,9 @@ class Quiz extends Model
         return $this->hasOne('App\Models\myQuiz')->where('user_id', Auth::guard('api')->user()->id);
     }
 
+    public function lesson()
+    {
+        return $this->belongsTo(Lesson::class);
+    }
+
 }
