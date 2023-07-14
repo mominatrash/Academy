@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnswerController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LevelController;
@@ -116,6 +117,14 @@ Route::post('update_question',  [QuestionController::class , 'update_question'])
 Route::post('delete_question',  [QuestionController::class , 'delete_question'])->name('delete_question');
 
 
+
+//answers
+Route::get('/show_answers/{id?}',  [AnswerController::class , 'show_answers'])->name('show_answers');
+Route::get('get_answers_data/{id?}', [AnswerController::class , 'get_answers_data'])->name('get_answers_data');
+Route::get('subject_answers_data/{id}', [AnswerController::class , 'subject_answers_data'])->name('subject_answers_data');
+Route::post('store_answer/{id}', [AnswerController::class , 'store_answer'])->name('store_answer');
+Route::post('update_answer',  [AnswerController::class , 'update_answer'])->name('update_answer');
+Route::post('delete_answer',  [AnswerController::class , 'delete_answer'])->name('delete_answer');
 
 });
 

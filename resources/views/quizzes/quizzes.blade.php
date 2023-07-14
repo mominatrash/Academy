@@ -121,9 +121,10 @@
                                 <div class="col-md-6">
                                     <label style="font-size: 20px;">النوع</label>
                                     <div class="form-group">
-                                        <input type="type" name="type" id="type" class="form-control" />
+                                        <input type="text" name="type" id="type" class="form-control" value="اختر الإجابة الصحيحة" />
                                         <span id="type_error" class="text-danger"></span>
                                     </div>
+                                    
                                 </div>
                             </div>
                             <div class="row">
@@ -148,7 +149,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <label style="font-size: 20px;">المدة</label>
+                                    <label style="font-size: 20px;">المدة ( بالدقيقة )</label>
                                     <div class="form-group">
                                         <input type="numeric" name="time" id="time" class="form-control" />
                                         <span id="time_error" class="text-danger"></span>

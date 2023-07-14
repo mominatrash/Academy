@@ -67,7 +67,7 @@
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel33">Add Modal Title</h4>
+                    <h4 class="modal-title" id="myModalLabel33">إضافة أسئلة </h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -81,10 +81,31 @@
                                     <div class="col-md-10">
                                         <div class="form-group">
                                             <label style="font-size: 20px">السؤال</label>
-                                            <div class="form-group">
-                                                <input type="text" placeholder="question" name="question" id="question" class="form-control" />
-                                                <span id="question_error" class="text-danger"></span>
-                                            </div>
+                                            
+                                            <?php
+                                            use App\Models\Quiz;
+                                            $quiz = Quiz::where('id', $id)->first();
+                                            
+                                            if ($quiz->input_type == "نص") {
+                                                ?>
+                                                    <div class="form-group">
+                                                        <input type="text" placeholder="أدخل السؤال هنا" name="question" id="question" class="form-control" />
+                                                        <span id="question_error" class="text-danger"></span>
+                                                    </div>
+                                                <?php
+                                            } else {
+                                                ?>
+                                                    <div class="form-group">
+                                                        <input type="file" placeholder="أدخل السؤال هنا" name="question" id="question" class="form-control" />
+                                                        <span id="question_error" class="text-danger"></span>
+                                                    </div>
+                                                <?php
+                                            }
+                                            ?>
+                                            
+                                            
+                                            
+
                                         </div>
                                     </div>
                                    

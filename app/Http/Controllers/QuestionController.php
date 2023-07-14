@@ -56,7 +56,7 @@ class QuestionController extends Controller
 
                 ->addColumn('answers_count', function ($data) {
 
-                    return '<a href="' . route('show_questions', ['id' => $data->id]) . '"><button class="btn btn-sm btn-primary">تعديل الإجابات (' . $data->answers->count() . ')</button></a>';
+                    return '<a href="' . route('show_answers', ['id' => $data->id]) . '"><button class="btn btn-sm btn-primary">تعديل الإجابات (' . $data->answers->count() . ')</button></a>';
 
 
 
