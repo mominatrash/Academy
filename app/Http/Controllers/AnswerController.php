@@ -38,6 +38,7 @@ class AnswerController extends Controller
             return DataTables::of($data)
 
                 ->addIndexColumn()
+                
                 ->addColumn('action', function ($data) {
 
                     return view('questions.btns.answers_actions', compact('data'));
@@ -66,44 +67,77 @@ class AnswerController extends Controller
 
 
 
-    public function store_answer(Request $request , $id)
+    public function store_answer(Request $request, $id)
     {
-
         $request->validate([
-            'answers.*.answer'   => 'required',
-
+            'answers.*.answer' => 'required',
         ]);
+    
+        if ($request->hasFile('answers.*.answer')) {
+            $answers = $request->file('answers');
+            foreach ($answers as $key => $answer) {
+                $status = $request->input('answers.' . $key . '.status');
+    
+                $answer_file = $answer['answer'];
+                $answer_name = 'answer_' . time() . '_' . uniqid() . '.' . $answer_file->getClientOriginalExtension();
 
+                $question = Question::where('id' , $id)->first();
 
-        foreach ($request->answers as $a) {
-
-            // return $answer;
-            // return $answer['answer'];
-            $answer = new Answer();
-            $answer->answer = $a['answer'];
-            $answer->status = $a['status'];
-            $answer->question_id = $id;
-            $answer->save();
+                $answer_path = 'Attachments/' . 'answers/' . $question->question . '/' . now()->format('Y-m-d');
+    
+                $answerAttachment = new Answer();
+                $answerAttachment->answer = asset($answer_path . '/' . $answer_name);
+                $answerAttachment->question_id = $id;
+                $answerAttachment->status = $status; // Set the status for this answer
+    
+                $answerAttachment->save();
+    
+                $answer_file->move(public_path($answer_path), $answer_name);
+            }
+        } else {
+            // Handle other non-file input data here
+            foreach ($request->answers as $a) {
+                $answer = new Answer();
+                $answer->answer = $a['answer'];
+                $answer->status = $request->input('answers.0.status'); // Set the status for non-file answer
+                $answer->question_id = $id;
+                $answer->save();
+            }
         }
-        // return json_encode($request->answer);
-        // $answer = new answer();
-        // $answer->answer = $request->answer;
-        // $answer->quiz_id = 1;
-        // $answer -> save();
-
-        // return response()->json([]);
     }
+    
+    
+    
+    
 
 
     public function update_answer(Request $request)
     {
 
-        
+        $request->validate([
+            'answer'    => 'required',
+            'status'    => 'required',
+        ]);
 
+        
+        if ($request->hasFile('answer')) {
+            $answer_file = $request->file('answer');
+            $answer_name = 'answer_' . time() . '_' . uniqid() . '.' . $answer_file->getClientOriginalExtension();
+    
+            $answerAttachment = Answer::where('id', $request->id)->first();
+            $answer_path = 'Attachments/' . 'answers/' . $answerAttachment->question->question . '/' . now()->format('Y-m-d');
+            $answerAttachment->answer = asset($answer_path . '/' . $answer_name);
+            $answerAttachment->status = $request->status;
+            $answerAttachment->save();
+    
+            $answer_file->move(public_path($answer_path), $answer_name);
+
+        }else{
         $answer = Answer::where('id', $request->id)->first();
         $answer->answer = $request->answer;
         $answer->status = $request->status;
         $answer->save();
+        }
 
         
 

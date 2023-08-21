@@ -76,7 +76,11 @@
 
 <br>
 
+@can('اضافة الاجابات')
+    
+
 <a class="btn btn-primary" data-toggle="modal" href="#inlineForm" style="margin-bottom:1%">إضافة إجابة</a>
+@endcan
 
 <div class="row" id="basic-table">
     <div class="col-12">
@@ -220,8 +224,27 @@
                                 <input type="hidden" name="id" id="id2">
                                 <label style="font-size:18px">إسم القسم</label>
                                 <div class="form-group">
-                                    <input type="text" placeholder="answer" name="answer" id="answer2" class="form-control" />
-                                    <span id="answer2_error" class="text-danger"></span>
+                                    <?php
+
+                                
+                                        if ($quiz->input_type == "نص") {
+                                            $placeholder = "أدخل الاجابة هنا";
+                                            $inputType = "text";
+                                            $answer_id = "answer2"; 
+                                            
+                                        } else {
+                                            $placeholder = "أدخل الاجابة هنا";
+                                            $inputType = "file";
+                                            $answer_id = "answer3"; 
+                                        }
+
+                                        echo '<div class="form-group">';
+                                        echo '<input type="' . $inputType . '" placeholder="' . $placeholder . '" name="answer" id="'.$answer_id.'" class="form-control" />';
+                                        echo '<span id="answer_error" class="text-danger"></span>';
+                                        echo '</div>';
+                                        ?>
+                                    {{-- <input type="text" placeholder="answer" name="answer" id="answer2" class="form-control" />
+                                    <span id="answer2_error" class="text-danger"></span> --}}
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -401,7 +424,7 @@ Swal.fire({
                 $('#position-top-start').click(); 
                 $('#answer').val('');
             },
-
+            
             error: function(reject) {
                 $("#add_answer2").css("display", "none");
                 $("#add_answer").css("display", "block");
@@ -426,12 +449,17 @@ Swal.fire({
             
             var modal = $(this);
             modal.find('.modal-body #id2').val(id);
-            modal.find('.modal-body #answer2').val(answer);
+            if (modal.find('#answer2')) {
+                modal.find('.modal-body #answer2').val(answer);
+            } else {
+                modal.find('.modal-body #answer3').val(answer);
+            }
             modal.find('.modal-body #status_correct2').prop('checked', status === 1);
             modal.find('.modal-body #status_incorrect2').prop('checked', status === 0);
         });
     });
-</script> 
+</script>
+
 
     {{-- update answer --}}
     <script>
@@ -439,7 +467,7 @@ Swal.fire({
     
             // $('#title2_error').text('')
             // $('#body2_error').text('')
-            $('#name_answer2_error').text('')
+            $('#name_answer2_error').text('')   
     
             $("#editing").css("display", "none");
             $("#editing2").css("display", "block");

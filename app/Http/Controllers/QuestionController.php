@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Quiz;
 use App\Models\Question;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 
 class QuestionController extends Controller
@@ -55,13 +56,13 @@ class QuestionController extends Controller
 
 
                 ->addColumn('answers_count', function ($data) {
-
-                    return '<a href="' . route('show_answers', ['id' => $data->id]) . '"><button class="btn btn-sm btn-primary">تعديل الإجابات (' . $data->answers->count() . ')</button></a>';
-
-
-
-                    //'.route('show_answers', ['id' => $data->id]).'
+                    if (auth()->user()->can('اجابات الاسئلة')) {
+                        return '<a href="' . route('show_answers', ['id' => $data->id]) . '"><button class="btn btn-sm btn-primary">تعديل الإجابات (' . $data->answers->count() . ')</button></a>';
+                    } else {
+                        return 'تعديل الإجابات (' . $data->answers->count() . ')';
+                    }
                 })
+                
 
 
 
@@ -75,45 +76,75 @@ class QuestionController extends Controller
 
 
 
-    public function store_question(Request $request , $id)
+
+    
+    public function store_question(Request $request, $id)
     {
-
         $request->validate([
-            'questions.*.question'   => 'required',
-
+            'questions.*.question' => 'required',
         ]);
-
-
-        foreach ($request->questions as $q) {
-
-            // return $question;
-            // return $question['question'];
-            $question = new Question();
-            $question->question = $q['question'];
-            $question->quiz_id = $id;
-            $question->save();
+    
+        if ($request->hasFile('questions.*.question')) {
+            $questions = $request->file('questions');
+            foreach ($questions as $q) {
+                $question_file = $q['question'];
+                $question_name = 'question_' . time() . '_' . uniqid() . '.' . $question_file->getClientOriginalExtension();
+                
+                $quiz = Quiz::where('id' , $id)->first();
+                $question_path = 'Attachments/' . 'questions/' . $quiz->name . '/' . now()->format('Y-m-d');
+    
+                $questionAttachment = new Question();
+                $questionAttachment->question = asset($question_path . '/' . $question_name);
+                $questionAttachment->quiz_id = $id;
+                $questionAttachment->save();
+    
+                // Use the move method to move the file
+                $question_file->move(public_path($question_path), $question_name);
+            }
+        } else {
+            // Handle other non-file input data here
+            foreach ($request->questions as $q) {
+                $question = new Question();
+                $question->question = $q['question'];
+                $question->quiz_id = $id;
+                $question->save();
+            }
         }
-        // return json_encode($request->question);
-        // $question = new Question();
-        // $question->question = $request->question;
-        // $question->quiz_id = 1;
-        // $question -> save();
-
-        // return response()->json([]);
     }
-
+    
+    
+    
+    
+    
+    
+    
+    
 
     public function update_question(Request $request)
     {
-
-
-        $question = Question::where('id', $request->id)->first();
-        $question->question = $request->question;
-        $question->save();
-
-        return response()->json([]);
+        $request->validate([
+            'question' => 'required',
+        ]);
+    
+        if ($request->hasFile('question')) {
+            $question_file = $request->file('question');
+            $question_name = 'question_' . time() . '_' . uniqid() . '.' . $question_file->getClientOriginalExtension();
+    
+            $questionAttachment = Question::where('id', $request->id)->first();
+            $question_path = 'Attachments/' . 'questions/' . $questionAttachment->quiz->name . '/' . now()->format('Y-m-d');
+            $questionAttachment->question = asset($question_path . '/' . $question_name);
+            $questionAttachment->save();
+    
+            // Use the move method to move the file
+            $question_file->move(public_path($question_path), $question_name);
+        } else {
+            // Handle other non-file input data here
+            $question = Question::where('id', $request->id)->first();
+            $question->question = $request->question;
+            $question->save();
+        }
     }
-
+    
 
     public function delete_question(Request $request)
     {

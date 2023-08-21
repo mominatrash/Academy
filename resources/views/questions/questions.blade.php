@@ -34,8 +34,12 @@
     @endphp
     <h1>  أسئلة    {{ $quiz->name }}</h1>
 
+    @can('اضافة الاسئلة')
+        
+    
     <a class="btn btn-primary" data-toggle="modal" href="#inlineForm" style="margin-bottom:1%">إضافة سؤال</a>
-
+    @endcan
+    
     <div class="row" id="basic-table">
         <div class="col-12">
             <div class="card">
@@ -162,34 +166,26 @@
                             <div class="col-md-12">
                                 <input type="hidden" name="id" id="id2">
                                 <label style="font-size: 20px">السؤال</label>
-                                <div class="form-group">
-                                    <input type="text" placeholder="question" name="question" id="question2" class="form-control" />
-                                    <span id="question2_error" class="text-danger"></span>
-                                </div>
+
+                                <?php
+                                if ($quiz->input_type == "نص") {
+                                    ?>
+                                        <div class="form-group">
+                                            <input type="text" placeholder="أدخل السؤال هنا" name="question" id="question2" class="form-control" />
+                                            <span id="question2_error" class="text-danger"></span>
+                                        </div>
+                                    <?php
+                                } else {
+                                    ?>
+                                        <div class="form-group">
+                                            <input type="file" placeholder="أدخل السؤال هنا" name="question" id="question3" class="form-control" />
+                                            <span id="question3_error" class="text-danger"></span>
+                                        </div>
+                                    <?php
+                                }
+                                ?>
                             </div>
                      </div>
-
-                        
-                        {{-- <label style="font-size:20px">اسم الدرس </label>
-                        <div class="form-group">
-                            <select name="lesson_id" id="lesson_id2" class="form-control">
-                                <option value="">اختر درس</option>
-                                @foreach($lessons as $lesson)
-                                    <option value="{{ $lesson->id }}">{{ $lesson->name }}</option>
-                                @endforeach
-                            </select>
-                            <span id="lesson_id2_error" class="text-danger"></span>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <label style="font-size: 20px">إضافة الملف</label>
-                                <div class="form-group">
-                                    <input type="file" name="file_link" id="file_link2" class="form-control" onchange="previewImage(event)" />
-                                    <span id="file_link_error" class="text-danger"></span>
-                                </div>
-
-                            </div> --}}
 
 
                     </div>
@@ -325,43 +321,42 @@
 
 
 
-    <script>
-        $(document).on('click', '#add_question', function(e) {
-          
+  <script>
+    $(document).on('click', '#add_question', function(e) {
+        $("#add_question2").css("display", "block");
+        $("#add_question").css("display", "none");
 
+        var formData = new FormData($('#add_question_form')[0]);
 
-            $("#add_question2").css("display", "block");
-            $("#add_question").css("display", "none");
-            var formData = new FormData($('#add_question_form')[0]);
-            $.ajax({
-                type: 'post',
-                enctype: 'multipart/form-data',
-                url: "{{ route('store_question', ['id' => $id]) }}",
-                data: formData,
-                processData: false,
-                contentType: false,
-                cache: false,
-                success: function(data) {
-                    $('.yajra-datatable').DataTable().ajax.reload(null, false);
-                    $("#add_question2").css("display", "none");
-                    $("#add_question").css("display", "block");
-                    $('.close').click();
-                    // toastr.success('question added successfully.');
-                    $('#position-top-start').click(); // Trigger the button click
-                    $('#question').val('');
-                },
+        $.ajax({
+            type: 'post',
+            enctype: 'multipart/form-data',
+            url: "{{ route('store_question', ['id' => $id]) }}",
+            data: formData,
+            processData: false,
+            contentType: false,
+            cache: false,
+            success: function(data) {
+                $('.yajra-datatable').DataTable().ajax.reload(null, false);
+                $("#add_question2").css("display", "none");
+                $("#add_question").css("display", "block");
+                $('.close').click();
+                $('#position-top-start').click(); // Trigger the button click
+                $('#question').val('');
+            },
 
-                error: function(reject) {
-                    $("#add_question2").css("display", "none");
-                    $("#add_question").css("display", "block");
-                    var response = $.parseJSON(reject.responseText);
-                    $.each(response.errors, function(key, val) {
-                        $("#" + key + "_error").text(val[0]);
-                    });
-                }
-            });
+            error: function(reject) {
+                $("#add_question2").css("display", "none");
+                $("#add_question").css("display", "block");
+                var response = $.parseJSON(reject.responseText);
+                $.each(response.errors, function(key, val) {
+                    $("#" + key + "_error").text(val[0]);
+                });
+            }
         });
-    </script>
+    });
+</script>
+
 
     {{-- show edit question --}}
     <script>

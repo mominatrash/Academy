@@ -54,71 +54,107 @@
             </li>
             <li class=" nav-item"><a class="d-flex align-items-center" href="app-kanban.html"><i data-feather="grid"></i><span class="menu-title text-truncate" data-i18n="Kanban">Kanban</span></a>
             </li> --}}
+
+                        {{-- @can('الطلاب') --}}
+            <li class=" nav-item"><a class="d-flex align-items-center" href=""><i class="fas fa-solid fa-people-roof"></i><span class="menu-title text-truncate" data-i18n="Invoice">الطلاب</span></a>
+                <ul class="menu-content">
+                    <li><a class="d-flex align-items-center" href="/show_students"><i class="fas fa-solid fa-bars"></i><span class="menu-item text-truncate" data-i18n="List">قائمة الطلاب</span></a>
+                    </li>
+
+                    <li><a class="d-flex align-items-center" href="/show_quizzes"><i class="fas fa-regular fa-newspaper"></i><span class="menu-item text-truncate" data-i18n="List">درجات الطلاب</span></a>
+                    </li>
+                </ul>
+            </li>
+            {{-- @endcan --}}
+
+            @can('المواد')
             <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i class="fa fa-book"></i><span class="menu-title text-truncate" data-i18n="Invoice">المواد</span></a>
                 <ul class="menu-content">
-                    <li><a class="d-flex align-items-center" href="/show_subjects"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">قائمة المواد</span></a>
+                    <li><a class="d-flex align-items-center" href="/show_subjects"><i class="fas fa-solid fa-bars"></i><span class="menu-item text-truncate" data-i18n="List">قائمة المواد</span></a>
                     </li>
                 </ul>
             </li>
+            @endcan
 
+            @can('المراحل')
             <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i class="fas fa-layer-group"></i><span class="menu-title text-truncate" data-i18n="Invoice">المراحل</span></a>
                 <ul class="menu-content">
-                    <li><a class="d-flex align-items-center" href="/show_levels"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">قائمة المراحل</span></a>
+                    <li><a class="d-flex align-items-center" href="/show_levels"><i class="fas fa-solid fa-bars"></i><span class="menu-item text-truncate" data-i18n="List">قائمة المراحل</span></a>
                     </li>
                 </ul>
             </li>
+            @endcan
 
+            @can('الدورات')
             <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i class="fas fa-chalkboard-user"></i><span class="menu-title text-truncate" data-i18n="Invoice">الدورات</span></a>
                 <ul class="menu-content">
-                    <li><a class="d-flex align-items-center" href="/show_courses"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">قائمة الدورات</span></a>
+                    <li><a class="d-flex align-items-center" href="/show_courses"><i class="fas fa-solid fa-bars"></i><span class="menu-item text-truncate" data-i18n="List">قائمة الدورات</span></a>
                     </li>
                 </ul>
             </li>
+            @endcan
 
+            @can('الاقسام')
             <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i class="fas fa-sitemap"></i><span class="menu-title text-truncate" data-i18n="Invoice">الأقسام</span></a>
                 <ul class="menu-content">
-                    <li><a class="d-flex align-items-center" href="/show_sections"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">قائمة الأقسام</span></a>
+                    <li><a class="d-flex align-items-center" href="/show_sections"><i class="fas fa-solid fa-bars"></i><span class="menu-item text-truncate" data-i18n="List">قائمة الأقسام</span></a>
                     </li>
                 </ul>
             </li>
+            @endcan
 
+            @can('الدروس')
             <li class=" nav-item"><a class="d-flex align-items-center" href=""><i class="fas fa-solid fa-person-chalkboard"></i><span class="menu-title text-truncate" data-i18n="Invoice">الدروس</span></a>
                 <ul class="menu-content">
-                    <li><a class="d-flex align-items-center" href="/show_lessons"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">قائمة الدروس</span></a>
+                    <li><a class="d-flex align-items-center" href="/show_lessons"><i class="fas fa-solid fa-bars"></i><span class="menu-item text-truncate" data-i18n="List">قائمة الدروس</span></a>
                     </li>
                 </ul>
             </li>
+            @endcan
 
+            @can('الاختبارات')
             <li class=" nav-item"><a class="d-flex align-items-center" href=""><i class="fa-regular fa-file-lines"></i><span class="menu-title text-truncate" data-i18n="Invoice">الإختبارات</span></a>
                 <ul class="menu-content">
-                    <li><a class="d-flex align-items-center" href="/show_quizzes"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">قائمة الإختبارات</span></a>
+                    <li><a class="d-flex align-items-center" href="/show_quizzes"><i class="fas fa-solid fa-bars"></i><span class="menu-item text-truncate" data-i18n="List">قائمة الإختبارات</span></a>
                     </li>
                 </ul>
             </li>
+            @endcan
             {{-- <li class=" nav-item"><a class="d-flex align-items-center" href="app-file-manager.html"><i data-feather="save"></i><span class="menu-title text-truncate" data-i18n="File Manager">File Manager</span></a>
             </li> --}}
             {{-- <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="shopping-cart"></i><span class="menu-title text-truncate" data-i18n="eCommerce">eCommerce</span></a>
                 <ul class="menu-content">
-                    <li><a class="d-flex align-items-center" href="app-ecommerce-shop.html"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Shop">Shop</span></a>
+                    <li><a class="d-flex align-items-center" href="app-ecommerce-shop.html"><i class="fas fa-solid fa-bars"></i><span class="menu-item text-truncate" data-i18n="Shop">Shop</span></a>
                     </li>
-                    <li><a class="d-flex align-items-center" href="app-ecommerce-details.html"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Details">Details</span></a>
+                    <li><a class="d-flex align-items-center" href="app-ecommerce-details.html"><i class="fas fa-solid fa-bars"></i><span class="menu-item text-truncate" data-i18n="Details">Details</span></a>
                     </li>
-                    <li><a class="d-flex align-items-center" href="app-ecommerce-wishlist.html"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Wish List">Wish List</span></a>
+                    <li><a class="d-flex align-items-center" href="app-ecommerce-wishlist.html"><i class="fas fa-solid fa-bars"></i><span class="menu-item text-truncate" data-i18n="Wish List">Wish List</span></a>
                     </li>
-                    <li><a class="d-flex align-items-center" href="app-ecommerce-checkout.html"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Checkout">Checkout</span></a>
+                    <li><a class="d-flex align-items-center" href="app-ecommerce-checkout.html"><i class="fas fa-solid fa-bars"></i><span class="menu-item text-truncate" data-i18n="Checkout">Checkout</span></a>
                     </li>
                 </ul>
             </li> --}}
-            <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i class="fa fa-users"></i><span class="menu-title text-truncate" data-i18n="User">المستخدمين</span></a>
+            
+            <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i class="fa fa-users"></i><span class="menu-title text-truncate" data-i18n="User">المساعدين</span></a>
                 <ul class="menu-content">
-                    <li><a class="d-flex align-items-center" href="app-user-list.html"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">List</span></a>
+
+                    @can('المساعدين')
+                    <li><a class="d-flex align-items-center" href="{{ route('show_admins') }}"><i class="fas fa-solid fa-bars"></i><span class="menu-item text-truncate" data-i18n="List">قائمة المساعدين</span></a>
                     </li>
-                    <li><a class="d-flex align-items-center" href="app-user-view.html"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="View">View</span></a>
+                    @endcan
+
+                    @can('الصلاحيات')
+                    <li><a class="d-flex align-items-center" href="{{ route('show_roles') }}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="View">صلاحيات المساعدين</span></a>
                     </li>
-                    <li><a class="d-flex align-items-center" href="app-user-edit.html"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Edit">Edit</span></a>
-                    </li>
+                    @endcan
+
+                    
                 </ul>
             </li>
+            
+            @can('التقارير')
+                
+            
             <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i class="fa fa-address-card" aria-hidden="true">></i><span class="menu-title text-truncate" data-i18n="Pages">التقارير</span></a>
                 <ul class="menu-content">
                     <li><a class="d-flex align-items-center" href="#"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Authentication">Authentication</span></a>
@@ -191,6 +227,11 @@
                     </li>
                 </ul>
             </li>
+
+            @endcan
+
+
+
             {{-- <li class=" navigation-header"><span data-i18n="User Interface">User Interface</span><i data-feather="more-horizontal"></i>
             </li>
             <li class=" nav-item"><a class="d-flex align-items-center" href="ui-typography.html"><i data-feather="type"></i><span class="menu-title text-truncate" data-i18n="Typography">Typography</span></a>

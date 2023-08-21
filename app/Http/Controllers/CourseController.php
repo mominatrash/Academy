@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Code;
+use App\Models\User;
 use App\Models\Level;
 use App\Models\Course;
+use App\Models\totalPoints;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -13,6 +16,73 @@ class CourseController extends Controller
     {
         $levels = Level::get();
         return view('courses.courses' , compact('levels'));
+
+        
+    } 
+    
+    public function show_student_courses($user_id)
+    {
+        $levels = Level::get();
+        return view('courses.courses' , compact('levels' , 'user_id')); 
+    }
+
+
+
+
+    public function student_courses_data(Request $request , $user_id)
+    {
+
+        if ($request->ajax()) {
+
+
+            $student_courses = Code::where('user_id' , $user_id)->pluck('course_id');
+            $data = Course::whereIn('id' , $student_courses)->get();
+            
+            $degree = totalPoints::where('user_id' , $user_id)->whereIn('course_id' , $student_courses)->get();
+
+
+            
+            return DataTables::of($data)
+
+            ->addIndexColumn()
+            ->addColumn('action', function ($data) {
+
+             return view('courses.btns.actions', compact('data'));
+
+            })
+
+            ->addColumn('sections_count', function ($data) {
+                if (auth()->user()->can('الاقسام')) {
+                    return '<a href="'.route('show_sections', ['id' => $data->id]).'"><button class="btn btn-sm btn-primary">'.$data->sections->count().'</button></a>';
+                } else {
+                    return $data->sections->count();
+                }
+            })
+            
+            ->addColumn('degree', function ($data) use ($user_id) {
+                $user_points = Totalpoints::where('user_id', $user_id)
+                    ->where('course_id', $data->id)
+                    ->first();
+
+                return $user_points ? $user_points->total_points : 'لم يحصل على درجات بعد';
+            })
+            
+
+
+            ->addColumn('is_free', function ($data) {
+                if ($data->is_free === 0) {
+                   
+                    return  ' <span class="badge badge-success">مدفوع <i class="fa fa-check"></i></span> ';
+
+                } elseif ($data->is_free === 1) {
+                    return  '<span class="badge badge-success">مجاني <i class="fa fa-check"></i></span>';
+                }
+            })
+
+            ->rawColumns(['name' , 'sections_count' , 'description' , 'is_free' , 'degree'])
+             ->make(true);
+                
+        }
     }
 
 
@@ -32,11 +102,14 @@ class CourseController extends Controller
                 return view('courses.btns.actions', compact('data'));
 
             })
-
             ->addColumn('sections_count', function ($data) {
-                
-                return '<a href="'.route('show_sections', ['id' => $data->id]).'"><button class="btn btn-secondary">'.$data->sections->count().'</button></a>';
+                if (auth()->user()->can('الاقسام')) {
+                    return '<a href="'.route('show_sections', ['id' => $data->id]).'"><button class="btn btn-sm btn-primary">'.$data->sections->count().'</button></a>';
+                } else {
+                    return $data->sections->count();
+                }
             })
+            
 
             ->addColumn('image', function ($data) {
                 
@@ -80,8 +153,11 @@ class CourseController extends Controller
             })
 
             ->addColumn('sections_count', function ($data) {
-                
-                return '<a href="'.route('show_sections', ['id' => $data->id]).'"><button class="btn btn-secondary">'.$data->sections->count().'</button></a>';
+                if (auth()->user()->can('الاقسام')) {
+                    return '<a href="'.route('show_sections', ['id' => $data->id]).'"><button class="btn btn-sm btn-primary">'.$data->sections->count().'</button></a>';
+                } else {
+                    return $data->sections->count();
+                }
             })
 
 

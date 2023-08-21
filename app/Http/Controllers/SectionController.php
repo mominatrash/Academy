@@ -45,10 +45,13 @@ class SectionController extends Controller
             })
 
             ->addColumn('lessons_count', function ($data) {
-                
-                return '<a href="'.route('show_lessons', ['id' => $data->id]).'"><button class="btn btn-secondary">'.$data->lessons->count().'</button></a>';
-                
+                if (auth()->user()->can('الدروس')) {
+                    return '<a href="'.route('show_lessons', ['id' => $data->id]).'"><button class="btn btn-sm btn-primary">'.$data->lessons->count().'</button></a>';
+                } else {
+                    return $data->lessons->count();
+                }
             })
+            
 
             ->rawColumns(['name' , 'lessons_count'])
 

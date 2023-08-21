@@ -31,8 +31,13 @@
         $lesson = DB::table('lessons')->where('id', request()->route('id'))->first();
     @endphp
     <h1>  مرفقات   {{ $lesson->name }}</h1>
+    
+
+    @can('اضافة المرفقات')
 
     <a class="btn btn-primary" data-toggle="modal" href="#inlineForm" style="margin-bottom:1%">إضافة مرفق</a>
+
+    @endcan
 
     <div class="row" id="basic-table">
         <div class="col-12">

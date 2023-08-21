@@ -44,7 +44,54 @@
 
 <br>
 
+@if (!request()->route('user_id'))
+
+@can('اضافة الاختبارات')
+    
+
 <a class="btn btn-primary" data-toggle="modal" href="#inlineForm" style="margin-bottom:1%">إضافة إختبار</a>
+@endcan
+
+@endif
+
+
+@if (request()->route('user_id'))
+@php
+    $user = DB::table('users')->where('id', request()->route('user_id'))->first();
+@endphp
+<div class="row" id="basic-table">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">اختبارات الطالب {{ $user->name }}</h4>
+            </div>
+            <div class="table-responsive">
+                <table class="table yajra-datatable" id="yajra-datatable1">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>إسم الإختبار</th>
+                            <th>تابع للدرس</th>
+                            <th>نوع الإختبار</th>
+                            <th>المدة</th>
+                            <th>عدد الأسئلة</th>
+                            <th>المحاولات المتبقية</th>
+                            <th>من أصل (محاولة)</th>
+                            <th>الخصم لكل محاولة</th>
+                            <th>درجة الطالب</th>
+                            <th>من أصل (درجة)</th>
+                            <th> العمليات </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@else
 
 <div class="row" id="basic-table">
     <div class="col-12">
@@ -66,7 +113,8 @@
                             <th>عدد الأسئلة</th>
                             <th>عدد المحاولات </th>
                             <th>الخصم لكل محاولة</th>
-                            <th> ملاحظات </th>
+                            <th>ملاحظات</th>
+                            <th>الممتحنين</th>
                             <th> العمليات </th>
                         </tr>
                     </thead>
@@ -79,7 +127,10 @@
 </div>
 
 
+@endif
 
+
+@if (request()->route('user_id'))
 
     {{-- modal add --}}
     <div class="form-modal-ex" id="modal_add">
@@ -88,7 +139,10 @@
             <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header" style="padding: 2%;">
+                        
+                       
                         <h3 style="position: relative; right: 43%; top: 5%" id="myModalLabel33">إضافة إختبار</h3>
+                      
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -199,7 +253,7 @@
         </div>
     </div>
     
-
+    @endif
 
 {{-- edit quiz --}}
 <div class="form-modal-ex" id="modal_add">
@@ -410,6 +464,44 @@ Swal.fire({
 }
 
 </script>
+@if (request()->route('user_id'))
+
+
+<script type="text/javascript">
+    $(function() {
+        var table = $('#yajra-datatable1').DataTable({
+            processing: true,
+            serverSide: true,
+                 ajax: "{{ route('student_quizzes_data',$user_id) }}",
+            columns: [{
+                    data: 'DT_RowIndex',
+                    name: 'DT_RowIndex',
+                    orderable: false,
+                    searchable: false
+                },
+
+                {data: 'name', name: 'name'},
+                {data: 'lesson_id', name: 'lesson_id'},
+                {data: 'type', name: 'type'},
+                {data: 'time' , name: 'time'},
+                {data: 'questions_number' , name: 'questions_number'},
+                {data: 'remaining_attempts'},
+                {data: 'attempts' , name: 'attempts'},
+                {data: 'deduction_per_attempt' , name: 'deduction_per_attempt'},
+                {data: 'student_points' , name: 'student_points'},
+                {data: 'points' , name: 'points'},
+                {data: 'action'},
+            ],
+
+            "lengthMenu": [
+                [5, 25, 50, -1], [5, 25, 50, 'All'] 
+            ], // page length options
+        });
+    });
+</script>
+
+@else
+
 
 <script type="text/javascript">
     $(function() {
@@ -439,6 +531,7 @@ Swal.fire({
                 {data: 'attempts' , name: 'attempts'},
                 {data: 'deduction_per_attempt' , name: 'deduction_per_attempt'},
                 {data: 'notes' , name: 'notes'},
+                {data: 'degrees' },
                 {data: 'action'},
             ],
 
@@ -449,7 +542,7 @@ Swal.fire({
     });
 </script>
 
-
+@endif
 
 <script>
     $(document).on('click', '#add_quiz', function(e) {

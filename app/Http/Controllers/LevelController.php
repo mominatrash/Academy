@@ -46,9 +46,13 @@ class LevelController extends Controller
             })
 
             ->addColumn('courses_count', function ($data) {
-                
-                return '<a href="'.route('show_courses', ['id' => $data->id]).'"><button class="btn btn-secondary">'.$data->courses->count().'</button></a>';
+                if (auth()->user()->can('الدورات')) {
+                    return '<a href="'.route('show_courses', ['id' => $data->id]).'"><button class="btn btn-sm btn-primary">'.$data->courses->count().'</button></a>';
+                } else {
+                    return $data->courses->count();
+                }
             })
+            
 
             ->rawColumns(['name' , 'courses_count'])
 

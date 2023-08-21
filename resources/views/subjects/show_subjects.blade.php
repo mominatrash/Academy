@@ -26,7 +26,9 @@
     <button class="btn btn-outline-primary" style="display: none"
         onclick="msg_delete()"id="position-top-start_delete"></button>
 
+        @can('اضافة المواد')
     <a class="btn btn-primary" data-toggle="modal" href="#inlineForm" style="margin-bottom:1%">إضافة مادة</a>
+    @endcan
 
     <div class="row" id="basic-table">
         <div class="col-12">

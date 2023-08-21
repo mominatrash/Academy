@@ -57,10 +57,13 @@ class LessonController extends Controller
 
 
                 ->addColumn('quizzes_count', function ($data) {
-
-                    return '<a href="'.route('show_quizzes', ['id' => $data->id]).'"><button class="btn btn-sm btn-primary">' . $data->quizzes->count() . '</button></a>';
-                    // 
+                    if (auth()->user()->can('الاختبارات')) {
+                        return '<a href="'.route('show_quizzes', ['id' => $data->id]).'"><button class="btn btn-sm btn-primary">' . $data->quizzes->count() . '</button></a>';
+                    } else {
+                        return $data->quizzes->count();
+                    }
                 })
+                
 
                 ->addColumn('type', function ($data) {
                     if ($data->type === 0) {
@@ -72,15 +75,21 @@ class LessonController extends Controller
                 })
 
                 ->addColumn('video_link', function ($data) {
-
-                    return '<a href="' . $data->video_link . '" target="_blank"><button class="btn btn-sm btn-light ">' . 'إضغط لعرض الفيديو' . '</button></a>';
-                    // '.route('show_lessons', ['id' => $data->id]).'
+                    if (auth()->user()->can('عرض فيديو الدروس')) {
+                        return '<a href="' . $data->video_link . '" target="_blank"><button class="btn btn-sm btn-light ">' . 'إضغط لعرض الفيديو' . '</button></a>';
+                    } else {
+                        return '***'; // Or any other message you want to display if the user doesn't have permission
+                    }
                 })
 
                 ->addColumn('attachments', function ($data) {
-
-                    return '<a href="' . route('show_lesson_attachments', ['id' => $data->id]) . '"><button class="btn btn-sm btn-primary">' . $data->attachments->count() . '</button></a>';
+                    if (auth()->user()->can('عرض مرفقات الدروس')) {
+                        return '<a href="' . route('show_lesson_attachments', ['id' => $data->id]) . '"><button class="btn btn-sm btn-primary">' . $data->attachments->count() . '</button></a>';
+                    } else {
+                        return $data->attachments->count();
+                    }
                 })
+                
 
                 ->rawColumns(['name', 'quizzes_count', 'type', 'video_link', 'section_id', 'attachments'])
 

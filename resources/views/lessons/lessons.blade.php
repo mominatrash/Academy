@@ -44,7 +44,12 @@
 
 <br>
 
+@can('اضافة الدروس')
+    
+
 <a class="btn btn-primary" data-toggle="modal" href="#inlineForm" style="margin-bottom:1%">إضافة درس</a>
+
+@endcan
 
 <div class="row" id="basic-table">
     <div class="col-12">

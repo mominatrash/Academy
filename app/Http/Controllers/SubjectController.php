@@ -25,9 +25,9 @@ class SubjectController extends Controller
 
             ->addIndexColumn()
             
-            ->setRowClass(function ($user) {
-                return $user->id % 2 == 0 ? 'alert-warning' : '';
-            })
+            // ->setRowClass(function ($user) {
+            //     return $user->id % 2 == 0 ? 'alert-warning' : '';
+            // })
 
 
 
@@ -45,8 +45,11 @@ class SubjectController extends Controller
             })
 
             ->addColumn('levels_count', function ($data) {
-                
-                return '<a href="'.route('show_levels', $data->id).'"><button class="btn btn-sm btn-primary">'.$data->levels->count().'</button></a>';
+                if (auth()->user()->can('المراحل')) {
+                    return '<a href="'.route('show_levels', $data->id).'"><button class="btn btn-sm btn-primary">'.$data->levels->count().'</button></a>';
+                } else {
+                    return $data->levels->count();
+                }
             })
             
 

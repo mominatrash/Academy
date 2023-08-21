@@ -16,6 +16,26 @@
         <link rel="stylesheet" type="text/css"
         href="{{ asset('/app-assets/css-rtl/plugins/extensions/ext-component-sweet-alerts.css') }}">
 
+        <style>
+            .table td {
+                text-align: center;
+                vertical-align: middle;
+            }
+        </style>
+        <style>
+            .table th {
+                text-align: center;
+                vertical-align: middle;
+            }
+        </style>
+
+        <style>.centered-container {
+            display: flex;
+            justify-content: center;
+          }
+          </style>
+
+
 @endsection
 
 
@@ -75,14 +95,59 @@
         </div>
     </div>
 
+    @elseif(Route::current()->parameter('user_id'))
+
+    @php
+
+    $user = DB::table('users')->where('id', $user_id)->first();
+    @endphp
+
+    <h1>دورات {{ $user->name }}</h1>
+    {{-- <p>إسم المادة: {{ $subject->name }}</p> --}}
+    <br>
+    
+    <a class="btn btn-primary" data-toggle="modal" href="#inlineForm" style="margin-bottom:1%">إضافة دورة</a>
+
+    <div class="row" id="basic-table">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">الدورات</h4>
+                </div>
+                <div class="table-responsive">
+                    <table class="table yajra-datatable" id="yajra-datatable3">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>إسم الدورة</th>
+                                <th>عدد الأقسام</th>
+                                <th>صورة العرض</th>
+                                <th>الوصف</th>
+                                <th>نوع الكورس</th>
+                                <th>درجته في الدورة</th>
+                                <th>العمليات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @else
 <h1>قائمة الدورات</h1>
 
 <br>
 
+@can('اضافة الدورات')
+
 <a class="btn btn-primary" data-toggle="modal" href="#inlineForm" style="margin-bottom:1%" onmouseover="startAnimation(this)" onmouseout="stopAnimation(this)">
     <i id="plus-icon" class="fas fa-plus-square" style="color: #ffffff;"></i>&nbsp; إضافة دورة
 </a>
+
+@endcan
 
 <script>
     function startAnimation(element) {
@@ -369,6 +434,40 @@
     }
 
 </script>
+@if (Route::current()->parameter('user_id'))
+
+<script type="text/javascript">
+    $(function() {
+        var table = $('#yajra-datatable3').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('student_courses_data', ['user_id' => $user_id]) }}",
+
+            columns: [{
+                    data: 'DT_RowIndex',
+                    name: 'DT_RowIndex',
+                    orderable: false,
+                    searchable: false
+                },
+                {data: 'name', name: 'name'},
+                {data: 'sections_count'},
+                {data: 'image', name: 'image'},
+                {data: 'description', name: 'description'},
+                {data: 'is_free', name: 'is_free'},
+                {data: 'degree'},
+                {data: 'action'},
+            ],
+
+            "lengthMenu": [
+                [5, 25, 50, -1], [5, 25, 50, 'All'] 
+            ], // page length options
+        });
+    });
+</script>
+
+@endif
+
+
 
 <script type="text/javascript">
     $(function() {
